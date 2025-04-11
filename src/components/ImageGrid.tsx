@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import ImageCard from "./ImageCard";
 import ImageModal from "./ImageModal";
 import type { CloudinaryImage } from "@/lib/cloudinary";
@@ -17,13 +17,24 @@ export default function ImageGrid({ images }: ImageGridProps) {
 
   return (
     <>
-      <Grid container spacing={2}>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "repeat(1, minmax(0, 1fr))",
+            sm: "repeat(2, minmax(0, 1fr))",
+            md: "repeat(3, minmax(0, 1fr))",
+            lg: "repeat(4, minmax(0, 1fr))",
+          },
+          gap: 2,
+          padding: 2
+        }}>
         {images.map((image) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={image.public_id}>
+          <Box key={image.public_id}>
             <ImageCard image={image} onClick={() => setSelectedImage(image)} />
-          </Grid>
+          </Box>
         ))}
-      </Grid>
+      </Box>
 
       <ImageModal
         open={!!selectedImage}
